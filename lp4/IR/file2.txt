@@ -1,0 +1,2 @@
+This is the second document.
+It contains some text for testing.

@@ -1,0 +1,24 @@
+Return-Path: <sender@example.com>
+Received: from mail.example.com (mail.example.com [192.0.2.10])
+    by mx.google.com with ESMTPS id x7si1234567qka.11.2025.10.11.10.25.55
+    for <receiver@gmail.com>
+    (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+    Sat, 11 Oct 2025 10:25:55 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sender@example.com designates 192.0.2.10 as permitted sender) client-ip=192.0.2.10;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@example.com header.s=selector1 header.b=abcd1234;
+       spf=pass (google.com: domain of sender@example.com designates 192.0.2.10 as permitted sender) smtp.mailfrom=sender@example.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=example.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=example.com; s=selector1;
+    h=from:to:subject:date:message-id;
+    bh=abcd1234abcd1234abcd1234abcd1234abcd1234=;
+    b=abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234abcd1234;
+Received: by mail.example.com (Postfix, from userid 1001)
+    id 9A1BC67890; Sat, 11 Oct 2025 10:25:53 -0700 (PDT)
+From: sender@example.com
+To: receiver@gmail.com
+Subject: Test Email for Header Analysis
+Date: Sat, 11 Oct 2025 10:25:50 -0700
+Message-ID: <20251011102550.9A1BC67890@mail.example.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
