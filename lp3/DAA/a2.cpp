@@ -15,7 +15,7 @@ public:
     Node(char character, int frequency) {
         ch = character;
         freq = frequency;
-        left = right = nullptr;
+        left = right = NULL;
     }
 
     ~Node() {
@@ -32,8 +32,11 @@ public:
 };
 
 class HuffmanTree {
+    Node* root = nullptr;
+    unordered_map<char, string> huffmanCode;
 public:
-    void build(const string& text) {
+
+    void build(string text) {
         unordered_map<char, int> freq;
         for (char ch : text) {
             freq[ch]++;
@@ -51,8 +54,10 @@ public:
         }
 
         while (pq.size() > 1) {
-            Node* left = pq.top(); pq.pop();
-            Node* right = pq.top(); pq.pop();
+            Node* left = pq.top(); 
+            pq.pop();
+            Node* right = pq.top(); 
+            pq.pop();
 
             Node* newNode = new Node('\0', left->freq + right->freq);
             newNode->left = left;
@@ -62,6 +67,7 @@ public:
 
         root = pq.top();
         encode(root, "");
+       
     }
 
     void printCodes() const {
@@ -70,16 +76,8 @@ public:
             cout << pair.first << " : " << pair.second << endl;
         }
     }
-
-    ~HuffmanTree() {
-        delete root;
-    }
-
-private:
-    Node* root = nullptr;
-    unordered_map<char, string> huffmanCode;
-
-    void encode(Node* node, const string& str) {
+    
+    void encode(Node* node,  string str) {
         if (node == nullptr)
             return;
 
@@ -90,17 +88,34 @@ private:
         encode(node->left, str + "0");
         encode(node->right, str + "1");
     }
+
+    void printEncodedText(string text)
+    {
+        string Encodedtext;
+        for(int i=0;i<text.size();i++)
+        {
+            Encodedtext+=huffmanCode[text[i]];
+        }
+        cout<<"\nencoded text:"<<Encodedtext<<endl;
+    }
+    ~HuffmanTree() {
+        delete root;
+    }
+
+
 };
 
 int main() {
-    string text;
-    cout << "Enter text to encode: ";
-    getline(cin, text);
+   
 
     HuffmanTree huffmanTree;
+     string text;
+    cout << "Enter text to encode: ";
+    getline(cin, text);
     huffmanTree.build(text);
+    huffmanTree.printEncodedText(text);
     huffmanTree.printCodes();
-
+    
     cout << "\nTime Complexity: O(n log n)\n";
     cout << "Space Complexity: O(n)\n";
 

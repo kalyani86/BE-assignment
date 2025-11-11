@@ -1,35 +1,111 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-// Iterative Fibonacci function
-int fibonacciIterative(int n) {
-    if (n == 0) return 0;
-    if (n == 1) return 1;
-
-    int a = 0, b = 1, fib = 1;
-    for (int i = 2; i <= n; i++) {
-        fib = a + b;
-        a = b;
-        b = fib;
+//Recurisve function 
+int fibRec(int n){
+    if(n==0|| n==1){
+        return n;
     }
-    return fib;
+    else{
+        return fibRec(n-1)+fibRec(n-2);
+    }
 }
 
-// Recursive Fibonacci function
-int fibonacciRecursive(int n) {
-    if (n == 0) return 0;
-    if (n == 1) return 1;
-    return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+//iterative
+int fibIter(int n){ 
+   
+    if(n==0|| n==1){
+        return n;
+    }
+
+    int fib1=0;
+    int fib2=1;
+    int temp; //third value
+    for(int i=2;i<=n;i++){
+        temp=fib1+fib2;
+        fib1=fib2;
+        fib2=temp;
+    }
+    return fib2;
 }
 
-int main() {
-    int n;
-    cout << "Enter the number: ";
-    cin >> n;
 
-    // Calling both functions
-    cout << "Fibonacci (Iterative) of " << n << " is: " << fibonacciIterative(n) << endl;
-    cout << "Fibonacci (Recursive) of " << n << " is: " << fibonacciRecursive(n) << endl;
 
+
+
+//printing n fiboacci numbers
+void printFibSeries(int n){
+    if(n<0){
+        //negative 
+        cout<<"Enter positive number"<<endl;
+        return;
+    }
+    if(n==0|| n==1){
+        cout<<n<<" ";
+        return;
+    }
+
+    int a=0;
+    int b=1;
+    cout<<a<<" "<<b<<" ";
+    int c; //third value
+    for(int i=2;i<=n;i++){
+        c=a+b;
+        cout<<c<<" ";
+        a=b;
+        b=c;
+    }
+    cout<<endl;
+}
+
+
+int main(){
+    while(true){
+        cout<<"Enter 1 to print nth fibonacci number using recursion"<<endl;
+        cout<<"Enter 2 to print nth fibonacci number using iterative"<<endl;
+        cout<<"Enter 3 to print fibonacci series"<<endl;
+        cout<<"Enter 4 to Exit"<<endl;
+        int op;
+        cout<<"Enter option"<<endl;
+        cin>>op;
+        if(op==1){
+            int n1;
+            cout<<"Enter the value of n"<<endl;
+            cin>>n1;
+            if(n1<0)
+            {
+                cout<<"number should greater than 0"<<endl;
+                continue;
+            }
+            int res=fibRec(n1);
+            cout<<"Result is: "<<res<<endl;
+        }
+        else if(op==2){
+            int n2;
+            cout<<"Enter the value of n"<<endl;
+            cin>>n2;
+            if(n2<0)
+            {
+                cout<<"number should greater than 0"<<endl;
+                continue;
+            }
+            int res=fibIter(n2);
+            cout<<"Result is: "<<res<<endl;
+        }
+        else if(op==3){
+            int n3;
+            cout<<"Enter the value of n"<<endl;
+            cin>>n3;
+            printFibSeries(n3);
+        }
+        else if(op==4)
+        {
+            exit(0);
+        }
+        else{
+            cout<<"Invalid option"<<endl;
+        }
+
+    }
     return 0;
 }

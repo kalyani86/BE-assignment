@@ -19,9 +19,23 @@ public:
     int weight;
     double bound;
 
-    Node(int lvl = -1, int w = 0, int p = 0) : level(lvl), weight(w), profit(p), bound(0) {}
+  Node(int lvl = -1, int w = 0, int p = 0) {
+    level = lvl;
+    weight = w;
+    profit = p;
+    bound = 0;
+}
+
 };
 
+class compare{
+    public:
+    bool operator()(Node a,Node b)
+    {
+        return a.bound < b.bound;
+    }
+    
+};
 class Knapsack {
 public:
     int W;  // Maximum weight of the knapsack
@@ -63,21 +77,30 @@ public:
 
     // Function to solve the knapsack problem using branch and bound
     int solve() {
+        //true --> no swap
+        //false -->swap
         sort(items.begin(), items.end(), compareItems);  // Sort items by value-to-weight ratio
 
-        auto cmp = [](Node a, Node b) { return a.bound < b.bound; };
-        priority_queue<Node, vector<Node>, decltype(cmp)> pq(cmp);
+       
+        priority_queue<Node, vector<Node>, compare> pq;
+        //priority queue that orders nodes by higher bound first (your compare must implement that).
+        //So the node with the largest bound is popped first.
 
+
+        //u--->current node
+        //v-->next node
         Node u, v;
         u.bound = calculateBound(u);
         pq.push(u);
+     
 
         int maxProfit = 0;
 
         while (!pq.empty()) {
             u = pq.top();
             pq.pop();
-
+            
+   cout<<"bound:"<<u.bound<<" "<<u.profit<<endl;
             if (u.bound > maxProfit && u.level != (int)items.size() - 1) {
                 v.level = u.level + 1;
 
